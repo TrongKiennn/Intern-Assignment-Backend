@@ -16,7 +16,7 @@ app.use(
 );
 
 const loginRouter = require("./src/login/loginRouter");
-
+const dashboardRouter=require("./src/dashboard/dashboardRouter")
 
 // Middleware
 app.use(express.json());
@@ -26,6 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/auth", loginRouter);
+app.use("/",dashboardRouter)
+
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(PORT, () => {

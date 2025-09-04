@@ -44,27 +44,47 @@ async function handleLoginRequest(req, res, next) {
   }
 }
 
-async function refreshToken(requestToken) {
-  if (!requestToken) throw new Error("Refresh Token is required!");
-
-  const tokenRow = await authSerVice.findRefreshToken(requestToken); 
-
-  if (!tokenRow) throw new Error("Refresh token not found!");
-
-  if (new Date(tokenRow.expiry_date) < new Date()) {
-    await authSerVice.deleteRefreshTokenById(tokenRow.id);
-    throw new Error("Refresh token expired. Please sign in again.");
+async function refreshToken(req,res) {
+  const { refreshToken: requestToken } = req.body;
+  console.log("I'm here");
+  if (requestToken == null) {
+    return res.status(403).json({ message: "Refresh Token is required!" });
   }
 
-  const newAccessToken = jwt.sign({ id: tokenRow.user_id }, config.secret, {
-    expiresIn: config.jwtExpiration,
-  });
+  try {
+    let refreshToken = await authSerVice.findRefreshToken(requestToken);
 
-  return {
-    accessToken: newAccessToken,
-    refreshToken: tokenRow.token,
-  };
-}
+    console.log(refreshToken);
+
+    if (!refreshToken) {
+      res.status(403).json({ message: "Refresh token is not in database!" });
+      return;
+    }
+
+    if (new Date(refreshToken.expiry_date) < new Date()) {
+      await authSerVice.deleteRefreshTokenById(refreshToken.id);
+      res.status(403).json({
+        message: "Refresh token was expired. Please make a new signin request",
+      });
+      return
+    }
+  
+    const newAccessToken = jwt.sign(
+      { id: refreshToken.user_id },
+      config.secret,
+      {
+        expiresIn: config.jwtExpiration,
+      }
+    );
+
+    return  res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: refreshToken.token,
+    });
+  } catch (err) {
+    return res.status(500).send({ message: err });
+  }
+};
 
 module.exports = {
   handleLoginRequest,
