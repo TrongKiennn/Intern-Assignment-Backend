@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run start-server:dev",
+    "start-server:dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "mysql2": "^3.14.4",
+    "nodemon": "^3.1.10",
     "pg": "^8.16.3",
     "sequelize": "^6.37.7",
     "tedious": "^18.6.1",
