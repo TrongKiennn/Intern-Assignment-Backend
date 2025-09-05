@@ -16,6 +16,7 @@ app.use(
 );
 
 const loginRouter = require("./src/login/loginRouter");
+const registrationRouter=require("./src/registration/registrationRouter")
 const dashboardRouter=require("./src/dashboard/dashboardRouter")
 
 // Middleware
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/auth", loginRouter);
+app.use("/auth", registrationRouter);
 app.use("/",dashboardRouter)
 
 

@@ -16,12 +16,12 @@ async function handleLoginRequest(req, res, next) {
       return res.status(401).json({ error: "Incorrect Email or Password!" });
     }
 
-    // const validPassword = await bcrypt.compare(password, user.passwordhash);
-    // if (!validPassword) {
-    //   return res
-    //     .status(401)
-    //     .render("login", { error: "Incorrect Email or Password!" });
-    // }
+    const validPassword = await bcrypt.compare(password, user.passwordhash);
+    if (!validPassword) {
+      return res
+        .status(401)
+        .render("login", { error: "Incorrect Email or Password!" });
+    }
 
     const accessToken = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: config.jwtExpiration,
