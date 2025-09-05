@@ -35,7 +35,7 @@ async function handleLoginRequest(req, res, next) {
     await authSerVice.saveRefreshToken(refreshToken, expiredAt, user.id);
 
     return res.status(200).json({
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, name:user.name },
       accessToken,
       refreshToken,
     });
