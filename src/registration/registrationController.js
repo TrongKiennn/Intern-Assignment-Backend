@@ -39,7 +39,7 @@ async function handleRegisterRequest(req, res) {
       email_verification_expiration: expiration,
     });
 
-    const verifyLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+    const verifyLink = `${process.env.FRONTEND_URL}/auth/verify-email/link?token=${verificationToken}`;
 
     await transporter.sendMail({
       from: `"Verify Team" <${process.env.AUTH_EMAIL}>`,
