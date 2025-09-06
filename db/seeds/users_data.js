@@ -6,17 +6,19 @@ exports.seed = async function (knex) {
   // Xóa dữ liệu cũ
   await knex("users").del();
 
+  const now = new Date();
+
   // Insert mẫu
   await knex("users").insert([
     {
-      name: "Admin User",
-      email: "admin@example.com",
-      passwordHash: "$2a$10$saltsaltsaltsaltsaltsaltABCDEFG1234567890", // bcrypt hash giả
-    },
-    {
-      name: "John Doe",
-      email: "john@example.com",
-      passwordHash: "$2a$10$saltsaltsaltsaltsaltsaltHIJKLMN9876543210",
+  
+      name: "Michael",
+      email: "abc@example.com",
+      passwordhash:
+        "$2b$08$5yz0zcK71bhCMcz5gZWqMu.NHiGQlooywdN8/yWo9w5T.ZJGaQ4WO",
+      email_verified: true,
+      created_at: now,
+      updated_at: now,
     },
   ]);
 };

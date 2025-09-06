@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:dev": "knex migrate:latest",
+     "create-db": "node ./db/createDatabase.js",
+    "seed:dev": "knex seed:run --specific=users_data.js ",
+    "setup-db:dev": "npm run create-db && npm run migrate:dev && npm run seed:dev",
     "dev": "npm run start-server:dev",
     "start-server:dev": "nodemon server.js"
   },
